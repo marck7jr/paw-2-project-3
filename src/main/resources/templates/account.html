@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head th:insert="fragments/components/head :: head">
+        <title>JAVAtacado | Conta</title>
+    </head>
+    <body>
+        <nav th:replace="fragments/components/nav :: nav"/>
+        <main>
+            <form method="POST" th:object="${accountNew}" th:action="@{/account/save}">
+                <input hidden th:field="*{id}" name="id" id="id"/>
+                <div class="field">
+                    <label for="name">Nome</label>
+                    <input th:field="*{name}" name="name" id="name" type="text"/>
+                </div>
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input th:field="*{email}" name="email" id="email" type="email"/>
+                </div>
+                <div class="field">
+                    <label for="birthDate">Data de Nascimento</label>
+                    <input th:field="*{birthDate}" name="birthDate" id="birthDate" type="date"/>
+                </div>
+                <div class="field">
+                    <label for="password">Senha</label>
+                    <input th:field="*{password}" name="password" id="password" type="password"/>
+                </div>
+                <button id="submit" post type="submit">Salvar</button>
+            </form>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Data de Nascimento</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="e : ${accountList}">
+                        <td th:text="${e.name}"></td>
+                        <td th:text="${e.email}"></td>
+                        <td th:text="${e.birthDate}"></td>
+                        <td>
+                            <a th:href="@{'/account/edit/' + ${e.id}}"><button put>Editar</button></a>
+                            <a th:href="@{'/account/delete/' + ${e.id}}"><button delete>Deletar</button></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>  
+    </body>
+</html>

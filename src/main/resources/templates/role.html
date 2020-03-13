@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head th:insert="fragments/components/head :: head">
+    <title>JAVAtacado | Cargo</title>
+</head>
+<body>
+    <nav th:replace="fragments/components/nav :: nav"/>
+    <main>
+        <form method="POST" th:object="${roleNew}" th:action="@{/role/save}">
+            <input hidden th:field="*{id}" name="id" id="id"/>
+            <div class="field">
+                <label for="name">Nome</label>
+                <input th:field="*{name}" name="name" id="name" type="text"/>
+            </div>
+            <button id="submit" post type="submit">Salvar</button>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="e : ${roleList}">
+                    <td>
+                        <div class="tree-list">
+                            <h3 th:text="${e.name}"></h3>
+                            <ul>
+                                <li th:each="x : ${e.employees}" th:text="${x.account.name}"/>
+                            </ul>
+                        </div>
+                    </td>
+                    <td>
+                        <a th:href="@{'/role/edit/' + ${e.id}}"><button put>Editar</button></a>
+                        <a th:href="@{'/role/delete/' + ${e.id}}"><button delete>Deletar</button></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>  
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head th:insert="fragments/components/head :: head">
+    <title>JAVAtacado | Filial</title>
+</head>
+<body>
+    <nav th:replace="fragments/components/nav :: nav"/>
+    <main>
+        <form method="POST" th:object="${subsidiaryNew}" th:action="@{/subsidiary/save}">
+            <input hidden th:field="*{id}" name="id" id="id"/>
+            <div class="field">
+                <label for="name">Nome</label>
+                <input th:field="*{name}" name="name" id="name" type="text"/>
+            </div>
+            <div class="field">
+                <label for="address">Endereço</label>
+                <textarea th:field="*{address}" name="address" id="address"/>
+            </div>
+            <div class="field">
+                <label for="foundedAt">Fundada em</label>
+                <input th:field="*{foundedAt}" name="foundedAt" id="foundedAt" type="date"/>
+            </div>
+            <button id="submit" post type="submit">Salvar</button>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Endereço</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="e : ${subsidiaryList}">
+                    <td>
+                        <div class="tree-list">
+                            <h3 th:text="${e.name}"></h3>
+                            <p th:text="${e.address}"></p>
+                            <p th:text="'Fundada em: ' + ${e.foundedAt}"></p>
+                            <ul>
+                                <li th:each="x : ${e.employees}" th:text="${x.account.name}"/>
+                            </ul>
+                        </div>
+                    </td>
+                    <td>
+                        <a th:href="@{'/subsidiary/edit/' + ${e.id}}"><button put>Editar</button></a>
+                        <a th:href="@{'/subsidiary/delete/' + ${e.id}}"><button delete>Deletar</button></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>  
+</body>
+</html>

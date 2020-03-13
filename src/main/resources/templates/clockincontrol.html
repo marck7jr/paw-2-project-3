@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head th:insert="fragments/components/head :: head">
+    <title>JAVAtacado | Cargo</title>
+</head>
+<body>
+    <nav th:replace="fragments/components/nav :: nav"/>
+    <main>
+        <form method="POST" th:object="${clockInControlNew}" th:action="@{/clockincontrol/save}">
+            <input hidden th:field="*{id}" name="id" id="id"/>
+            <div class="field">
+                <label for="employee">Funcionário</label>
+                <select th:field="*{employee}" name="employee" id="employee" selected>
+                    <option value="">Selecione</option>
+                    <option th:each="e : ${employeeList}" th:value="${e.id}" th:text="${e.account.name}"/>
+                </select>
+            </div>
+            <div class="field">
+                <label for="checkIn">Entrada</label>
+                <input th:field="*{checkIn}" name="checkIn" id="checkIn" type="time"/>
+            </div>
+            <div class="field">
+                <label for="checkOut">Saída</label>
+                <input th:field="*{checkOut}" name="checkOut" id="checkOut" type="time"/>
+            </div>
+            <div class="field">
+                <label for="date">Data</label>
+                <input th:field="*{date}" name="date" id="date" type="date"/>
+            </div>
+            <button id="submit" post type="submit">Salvar</button>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Funcionário</th>
+                    <th scope="col">Entrada</th>
+                    <th scope="col">Saída</th>
+                    <th scope="col">Data</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="e : ${clockInControlList}">
+                    <td th:text="${e.employee.account.name}"/>
+                    <td th:text="${e.checkIn}"/>
+                    <td th:text="${e.checkOut}"/>
+                    <td th:text="${e.date}"/>
+                    <td>
+                        <a th:href="@{'/clockincontrol/edit/' + ${e.id}}"><button put>Editar</button></a>
+                        <a th:href="@{'/clockincontrol/delete/' + ${e.id}}"><button delete>Deletar</button></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>  
+</body>
+</html>

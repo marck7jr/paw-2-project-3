@@ -1,0 +1,158 @@
+$altColor: #efeeee;
+$baseColor: #000000;
+
+$putColor: #0e7a0d;
+$deleteColor: #990000;
+
+$neomorphismBoxShadow:  -.5em -.5em 2em rgba(#ffffff, .8), .5em .5em .5em rgba($baseColor, .2);
+$neomorphismBoxShadowInset: $neomorphismBoxShadow inset;
+
+@mixin neomorphismEffect($isInset) {
+    border: 1px solid rgba(#ffffff, .2);
+    border-radius: .5em;
+    box-shadow: if($isInset, $neomorphismBoxShadowInset, $neomorphismBoxShadow);
+    outline: none;
+    padding: .5em;
+}
+
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    transition: all .2s;
+}
+
+html {
+    body {
+        display: flex;
+        flex-flow: column;
+        min-height: 100vh;
+        min-width: 100vw;
+
+        nav {
+            padding: .5em;
+
+            * {
+                margin-left: 8pt;
+            }
+
+            a {                
+                background: inherit;
+                color: $baseColor;
+                font-weight: bold;
+                text-decoration: none;
+            }
+        }
+
+        main {
+            background: $altColor;
+            display: flex;
+            flex-flow: row;
+            flex-grow: 1;
+            
+            @media screen and (max-width: 720px)  {
+                flex-flow: column;
+            }
+
+            form {
+                background: #ffffff;
+                display: flex;
+                flex-flow: column;
+                min-width: 20vw;
+                padding: 2em;
+
+                .field {
+                    display: inherit;
+                    flex-flow: inherit;
+
+                    * {
+                        margin-bottom: 8pt;
+                    }
+
+                    label {
+                        font-weight: bold;
+                    }
+
+                    input, select, textarea {
+                        @include neomorphismEffect(false);
+                        
+                        &:focus {
+                            @include neomorphismEffect(true);
+                        }
+                    }
+
+                }
+
+                #submit {
+                    @include neomorphismEffect(false);
+                    background: $baseColor;
+                    bottom: 1em;
+                    color: $altColor;
+                    cursor: pointer;
+                    font-weight: bold;
+                    
+                    &:hover {
+                        background: rgba($baseColor, .8);
+                    }
+                }
+            }
+
+            table {
+                text-align: left;
+                width: 100%;
+
+                thead {
+                    background: #ffffff;
+                    padding: 0 2em;
+
+                    tr {
+                        th {
+                            padding: .5em;
+                        }
+                    }
+                }
+
+                tbody {
+                    tr {
+                        &:hover {
+                            background: rgba(#ffffff, .6);
+                        }
+
+                        td {
+                            padding: .5em;
+
+                            ul {
+                                margin-left: 2em;
+                            }
+
+                            button {
+                                color: $altColor;
+                                cursor: pointer;
+                                @include neomorphismEffect(false);
+                                padding: .5em 1em;
+                                margin: 4pt 0;
+                                align-self: stretch;
+
+                                &[put] {
+                                    background: $putColor;
+
+                                    &:hover {
+                                        background: rgba($putColor, .8);
+                                    }
+                                }
+                                
+                                &[delete] {
+                                    background: $deleteColor;
+
+                                    &:hover {
+                                        background: rgba($deleteColor, .8);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
